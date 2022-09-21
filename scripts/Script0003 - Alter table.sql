@@ -1,0 +1,1 @@
+﻿ALTER TABLE [dbo].[SQLDeploy] ADD [colc] varchar(10);

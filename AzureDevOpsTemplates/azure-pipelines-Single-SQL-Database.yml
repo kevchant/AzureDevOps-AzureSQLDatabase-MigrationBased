@@ -1,0 +1,48 @@
+# Sample of how to deploy to an Azure SQL Database
+# You can use a self-hosted agent installed locally for this to work
+# You can also use a Microsoft-hosted agent for the Azure services
+
+# For this pipeline you also need to setup the below pipeline variables
+  # AzureSQLSrv - Your logical Azure SQL Server 
+  # AzureSQLDB - Your Azure SQL Database
+    # Note it has to exist BEFORE this the scripts are run
+  # AzureSQLuser - User name to connect to the Serverless SQL Pool endpoint
+    # try and keep this secret
+  # AzureSQLpw - Password of above user, MUST be wrapped in single quotes for it to work.
+    # For example, 'SecretPW123'
+    # Definitely keep this one secret
+
+variables:
+- group: AzureSQLDatabaseMigrationBasedKeyVault
+- group: AzureSQLDatabaseMigrationBasedNonSensitive
+
+
+trigger:
+- main
+
+pool: 
+  name: $(agentpool)
+
+stages:
+
+- stage: RunScripts
+  displayName: 'Run Migration-based scripts'
+
+  jobs:
+    - job: 'RunScripts'
+      displayName: 'Run Migration-based scripts'
+      steps:
+      - task: PowerShell@2
+        displayName: 'Install dbops PoSh Module if not there'
+        inputs:
+          targetType: 'inline'
+          script: if (-not (Get-Module -ListAvailable | Where-Object {$_.Name -eq 'dbops'})) {Install-Module dbops -Force -SkipPublisherCheck}
+
+
+      - task: PowerShell@2
+        displayName: 'Run migration-based scripts'
+        inputs:
+          targetType: 'inline'
+          script: |
+            $SecurePw=ConvertTo-SecureString $(AzureSQLpw) –asplaintext –force
+            Install-DBOScript -ScriptPath scripts -sqlinstance $(AzureSQLSrv) -Database $(AzureSQLDB) -UserName $(AzureSQLuser) -Password $($SecurePw)
