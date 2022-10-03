@@ -13,9 +13,10 @@
     # Definitely keep this one secret
 
 # Optional variable groups you can use
-variables:
-- group: AzureSQLDatabaseMigrationBasedKeyVault
-- group: AzureSQLDatabaseMigrationBasedNonSensitive
+# Added the below three lines as an example, uncomment the below three lines to use them
+# variables:
+# - group: AzureSQLDatabaseMigrationBasedKeyVault
+# - group: AzureSQLDatabaseMigrationBasedNonSensitive
 
 
 trigger:
