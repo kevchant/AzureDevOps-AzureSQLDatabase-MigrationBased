@@ -1,6 +1,6 @@
 # Azure SQL Database Migration-Based
 
-Example of a SQL Server Migration-Based deployment that deploys to an Azure SQL Database. Which I mention in a blog post called '[Introducing the dbops PowerShell module](https://www.kevinrchant.com/2022/09/21/introducing-the-dbops-powershell-module/)'.
+Example of a SQL Server Migration-Based deployment that deploys to an Azure SQL Database. Which I mention in a blog post called '[Introducing the dbops PowerShell module for Azure DevOps deployments](https://www.kevinrchant.com/2022/09/21/introducing-the-dbops-powershell-module/)'.
 
 It contains an example YAML file that you can use as a YAML pipeline in Azure Pipelines. You can find it in the AzureDevOpsTemplates folder. In order to use it in Azure Pipelines you can either import or fork this repository into another GitHub repository, or into [Azure Repos](https://bit.ly/3s4uO77).
 
